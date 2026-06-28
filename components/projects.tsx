@@ -4,6 +4,7 @@ import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { MouseEvent } from 'react';
 import { ExternalLink, Github } from 'lucide-react';
 import Image from 'next/image';
+import BentoCard from './ui/bento-card';
 
 function ProjectCard({ title, description, tags, size = "small", image = "" }: { title: string, description: string, tags: string[], size?: "small" | "medium" | "large", image?: string }) {
     const mouseX = useMotionValue(0);
@@ -18,8 +19,8 @@ function ProjectCard({ title, description, tags, size = "small", image = "" }: {
     const colSpan = size === "large" ? "md:col-span-2 md:row-span-2" : size === "medium" ? "md:col-span-1 md:row-span-2" : "col-span-1";
 
     return (
-        <div
-            className={`group relative border border-white/10 overflow-hidden rounded-3xl bg-neutral-900/50 ${colSpan} hover:scale-[1.02] transition-transform duration-300`}
+        <BentoCard
+            className={`group relative overflow-hidden rounded-3xl border-white/10 bg-neutral-900/50 p-0 ${colSpan}`}
             onMouseMove={handleMouseMove}
         >
             <motion.div
@@ -50,7 +51,7 @@ function ProjectCard({ title, description, tags, size = "small", image = "" }: {
                     </div>
                 </div>
             </div>
-        </div>
+        </BentoCard>
     );
 }
 
@@ -81,10 +82,11 @@ export default function Projects() {
                     description="Accessibility-focused IoT system allowing control of home appliances via hand gestures using accelerometers."
                     tags={["Arduino", "C++", "Sensors", "IoT"]}
                 />
-                <div className="bg-neutral-900/30 rounded-3xl border border-white/5 p-6 flex items-center justify-center text-center text-neutral-500 hover:text-neutral-400 hover:bg-neutral-900/50 transition-colors">
+                <BentoCard className="bg-neutral-900/30 rounded-3xl border border-white/5 p-6 flex items-center justify-center text-center text-neutral-500 hover:text-neutral-400 hover:bg-neutral-900/50 transition-colors">
                     <p>More projects coming soon...</p>
-                </div>
+                </BentoCard>
             </div>
         </section>
     );
 }
+
