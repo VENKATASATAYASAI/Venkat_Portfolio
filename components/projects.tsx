@@ -1,92 +1,83 @@
 'use client';
 
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { MouseEvent } from 'react';
-import { ExternalLink, Github } from 'lucide-react';
-import Image from 'next/image';
+import { projects, type Project } from '@/lib/data';
 import BentoCard from './ui/bento-card';
+import SectionHeading from './ui/section-heading';
 
-function ProjectCard({ title, description, tags, size = "small", image = "" }: { title: string, description: string, tags: string[], size?: "small" | "medium" | "large", image?: string }) {
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
+function ProjectCard({ project }: { project: Project }) {
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const glow = useMotionTemplate`radial-gradient(500px circle at ${mx}px ${my}px, rgba(139,92,246,0.18), transparent 75%)`;
 
-    function handleMouseMove({ currentTarget, clientX, clientY }: MouseEvent) {
-        const { left, top } = currentTarget.getBoundingClientRect();
-        mouseX.set(clientX - left);
-        mouseY.set(clientY - top);
-    }
+  function onMove({ currentTarget, clientX, clientY }: MouseEvent) {
+    const r = currentTarget.getBoundingClientRect();
+    mx.set(clientX - r.left);
+    my.set(clientY - r.top);
+  }
 
-    const colSpan = size === "large" ? "md:col-span-2 md:row-span-2" : size === "medium" ? "md:col-span-1 md:row-span-2" : "col-span-1";
+  const Wrapper = project.href ? 'a' : 'div';
 
-    return (
-        <BentoCard
-            className={`group relative overflow-hidden rounded-3xl border-white/10 bg-neutral-900/50 p-0 ${colSpan}`}
-            onMouseMove={handleMouseMove}
-        >
-            <motion.div
-                className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-300 group-hover:opacity-100"
-                style={{
-                    background: useMotionTemplate`
-                        radial-gradient(
-                            650px circle at ${mouseX}px ${mouseY}px,
-                            rgba(255, 255, 255, 0.1),
-                            transparent 80%
-                        )
-                    `,
-                }}
-            />
-            <div className="relative h-full flex flex-col p-6 z-10">
-                <div className="flex-1 space-y-4">
-                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-2xl border border-white/10">
-                        🚀
-                    </div>
-                    <h3 className="text-2xl font-bold text-neutral-100">{title}</h3>
-                    <p className="text-neutral-400">{description}</p>
-                    <div className="flex flex-wrap gap-2 pt-4">
-                        {tags.map(tag => (
-                            <span key={tag} className="px-3 py-1 text-xs rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </BentoCard>
-    );
+  return (
+    <BentoCard
+      onMouseMove={onMove}
+      className={`group relative overflow-hidden rounded-3xl border-white/10 bg-white/[0.03] p-0 ${
+        project.featured ? 'md:col-span-2 md:row-span-2' : ''
+      }`}
+    >
+      <motion.div className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100" style={{ background: glow }} />
+      {project.featured && (
+        <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-gradient-to-br from-sky-500/30 to-violet-600/30 blur-3xl" />
+      )}
+      <Wrapper
+        {...(project.href ? { href: project.href, target: '_blank', rel: 'noopener noreferrer' } : {})}
+        className="relative z-10 flex h-full flex-col p-7"
+      >
+        <div className="flex items-start justify-between">
+          <div className={`grid place-items-center rounded-2xl border border-white/10 bg-white/5 ${project.featured ? 'h-16 w-16 text-3xl' : 'h-12 w-12 text-2xl'}`}>
+            {project.emoji}
+          </div>
+          {project.href && (
+            <ArrowUpRight className="text-neutral-500 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-white" />
+          )}
+        </div>
+        {project.featured && (
+          <pre className="mt-8 hidden overflow-hidden rounded-2xl border border-white/10 bg-black/40 p-5 font-mono text-[13px] leading-relaxed text-neutral-400 md:block">
+            <span className="text-neutral-600">%%[ /* personalize from a data extension */ ]%%</span>{'\n'}
+            <span className="text-violet-300">SET</span> @rows = <span className="text-sky-300">LookupRows</span>(<span className="text-emerald-300">&quot;Loyalty_DE&quot;</span>, <span className="text-emerald-300">&quot;SubscriberKey&quot;</span>, _subscriberkey){'\n'}
+            <span className="text-violet-300">IF</span> <span className="text-sky-300">RowCount</span>(@rows) &gt; 0 <span className="text-violet-300">THEN</span>{'\n'}
+            {'  '}<span className="text-violet-300">SET</span> @tier = <span className="text-sky-300">Field</span>(<span className="text-sky-300">Row</span>(@rows, 1), <span className="text-emerald-300">&quot;Tier&quot;</span>){'\n'}
+            <span className="text-violet-300">ENDIF</span>
+          </pre>
+        )}
+        <div className="mt-auto pt-8">
+          <p className="font-mono text-xs uppercase tracking-widest text-violet-300">{project.kicker}</p>
+          <h3 className={`mt-2 font-bold text-white ${project.featured ? 'text-3xl md:text-4xl' : 'text-xl'}`}>{project.title}</h3>
+          <p className={`mt-3 text-neutral-400 ${project.featured ? 'max-w-xl text-base md:text-lg' : 'text-sm'}`}>{project.description}</p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            {project.tags.map((t) => (
+              <span key={t} className="rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1 text-xs text-sky-300">
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      </Wrapper>
+    </BentoCard>
+  );
 }
 
 export default function Projects() {
-    return (
-        <section id="projects" className="py-32 container mx-auto px-4 z-10 relative">
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="mb-16"
-            >
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">Selected Projects</h2>
-                <div className="h-1 w-20 bg-blue-500 rounded-full" />
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
-                <ProjectCard
-                    size="large"
-                    title="Raspberry Pi Obstacle Avoidance Robot"
-                    description="Autonomous robot navigation system using OpenCV for obstacle detection and path planning. Engineered with Python on Raspberry Pi."
-                    tags={["Python", "Raspberry Pi", "OpenCV", "Robotics"]}
-                />
-                <ProjectCard
-                    size="medium"
-                    title="Hand Gesture Appliance Control"
-                    description="Accessibility-focused IoT system allowing control of home appliances via hand gestures using accelerometers."
-                    tags={["Arduino", "C++", "Sensors", "IoT"]}
-                />
-                <BentoCard className="bg-neutral-900/30 rounded-3xl border border-white/5 p-6 flex items-center justify-center text-center text-neutral-500 hover:text-neutral-400 hover:bg-neutral-900/50 transition-colors">
-                    <p>More projects coming soon...</p>
-                </BentoCard>
-            </div>
-        </section>
-    );
+  return (
+    <section id="projects" className="relative mx-auto max-w-6xl scroll-mt-24 px-4 py-28">
+      <SectionHeading eyebrow="Projects" title="Selected work" subtitle="From Marketing Cloud tooling to hardware experiments." />
+      <div className="grid auto-rows-[minmax(280px,auto)] grid-cols-1 gap-5 md:grid-cols-3">
+        {projects.map((p) => (
+          <ProjectCard key={p.title} project={p} />
+        ))}
+      </div>
+    </section>
+  );
 }
-
