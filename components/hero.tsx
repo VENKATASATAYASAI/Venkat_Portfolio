@@ -3,7 +3,7 @@
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { ArrowRight, BadgeCheck, Mail, MapPin } from 'lucide-react';
 import { MouseEvent, useEffect, useState } from 'react';
-import { profile } from '@/lib/data';
+import { certifications, profile } from '@/lib/data';
 
 function useTypewriter(words: string[]) {
   const [index, setIndex] = useState(0);
@@ -110,7 +110,7 @@ export default function Hero() {
         </motion.p>
 
         <motion.div variants={item} className="mt-6 flex flex-wrap items-center justify-center gap-2 text-sm">
-          {['Marketing Cloud Administrator', 'Engagement Specialist'].map((c) => (
+          {certifications.filter((c) => c.status === 'earned').map(({ name: c }) => (
             <span key={c} className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1 text-sky-300">
               <BadgeCheck size={14} /> {c}
             </span>

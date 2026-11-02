@@ -10,6 +10,7 @@ export const profile = {
     "Marketing Cloud Consultant",
     "SFMC Admin — Certified",
     "Engagement Specialist — Certified",
+    "Agentforce Specialist — Certified",
     "Data Cloud Consultant — in progress",
   ],
   summary:
@@ -29,7 +30,7 @@ export const profile = {
 };
 
 export const stats = [
-  { value: "2", label: "Salesforce certifications" },
+  { value: "3", label: "Salesforce certifications" },
   { value: "M.Eng", label: "Electrical & Computer Eng." },
   { value: "2026", label: "Consulting since February" },
   { value: "2+", label: "Certs in progress" },
@@ -54,6 +55,12 @@ export const certifications: Certification[] = [
     issuer: "Salesforce",
     status: "earned",
     accent: "from-fuchsia-400 to-violet-600",
+  },
+  {
+    name: "Agentforce Specialist",
+    issuer: "Salesforce",
+    status: "earned",
+    accent: "from-indigo-400 to-cyan-500",
   },
   {
     name: "Data Cloud Consultant",

@@ -66,9 +66,9 @@ export default function Certifications() {
       <SectionHeading
         eyebrow="Certifications"
         title="Credentials & what's next"
-        subtitle="Certified on Marketing Cloud today — working toward Data Cloud and Marketing Cloud Next."
+        subtitle="Certified in Marketing Cloud and Agentforce — working toward Data Cloud and Marketing Cloud Next."
       />
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {certifications.map((c, i) => (
           <CertCard key={c.name} cert={c} index={i} />
         ))}
