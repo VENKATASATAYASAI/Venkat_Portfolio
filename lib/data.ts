@@ -17,7 +17,7 @@ export const profile = {
   location: "Ontario, Canada",
   email: "tunikipativenkat310@gmail.com",
   links: {
-    linkedin: "https://www.linkedin.com/",
+    linkedin: "https://www.linkedin.com/in/venkata-satya-sai-tunikipati-b47a73213",
     github: "https://github.com/VENKATASATAYASAI",
     trailblazer: "https://www.salesforce.com/trailblazer/",
   },
