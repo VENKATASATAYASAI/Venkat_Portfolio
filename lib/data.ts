@@ -19,7 +19,7 @@ export const profile = {
   links: {
     linkedin: "https://www.linkedin.com/in/venkata-satya-sai-tunikipati-b47a73213",
     github: "https://github.com/VENKATASATAYASAI",
-    trailblazer: "https://www.salesforce.com/trailblazer/",
+    trailblazer: "https://www.salesforce.com/trailblazer/bdw0e844ec72rgzx58",
   },
   current: {
     title: "Marketing Cloud Consultant",
