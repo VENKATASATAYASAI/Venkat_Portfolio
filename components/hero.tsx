@@ -4,6 +4,7 @@ import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { ArrowRight, BadgeCheck, Mail, MapPin } from 'lucide-react';
 import { MouseEvent, useEffect, useState } from 'react';
 import { certifications, profile } from '@/lib/data';
+import Magnetic from './ui/magnetic';
 
 function useTypewriter(words: string[]) {
   const [index, setIndex] = useState(0);
@@ -121,6 +122,7 @@ export default function Hero() {
         </motion.div>
 
         <motion.div variants={item} className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <Magnetic>
           <a
             href="#projects"
             className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-white px-8 py-3.5 font-medium text-neutral-950 transition hover:shadow-[0_0_40px_-5px_rgba(56,189,248,0.6)]"
@@ -128,6 +130,8 @@ export default function Hero() {
             View my work
             <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
           </a>
+          </Magnetic>
+          <Magnetic>
           <a
             href={`mailto:${profile.email}`}
             className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-8 py-3.5 font-medium text-white backdrop-blur-md transition hover:border-white/30 hover:bg-white/[0.07]"
@@ -135,6 +139,7 @@ export default function Hero() {
             Get in touch
             <Mail size={18} />
           </a>
+          </Magnetic>
         </motion.div>
       </motion.div>
 

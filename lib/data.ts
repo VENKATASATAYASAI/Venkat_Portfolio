@@ -29,11 +29,39 @@ export const profile = {
   },
 };
 
-export const stats = [
-  { value: "3", label: "Salesforce certifications" },
+// `value` animates as a count-up when it is a number; `suffix` is appended.
+export const stats: { value: number | string; suffix?: string; label: string }[] = [
+  { value: 3, label: "Salesforce certifications" },
   { value: "M.Eng", label: "Electrical & Computer Eng." },
-  { value: "2026", label: "Consulting since February" },
-  { value: "2+", label: "Certs in progress" },
+  { value: 2026, label: "Consulting since February" },
+  { value: 2, suffix: "+", label: "Certs in progress" },
+];
+
+export const capabilities = [
+  {
+    title: "Journey Orchestration",
+    description: "Multi-step, event-driven journeys in Journey Builder with entry logic, decision splits and wait strategies.",
+    icon: "route",
+    accent: "from-sky-500/30 to-blue-600/10",
+  },
+  {
+    title: "Data & Segmentation",
+    description: "Data extension models, Contact Builder relationships and SQL queries that produce clean, targetable audiences.",
+    icon: "database",
+    accent: "from-violet-500/30 to-fuchsia-600/10",
+  },
+  {
+    title: "Personalization",
+    description: "AMPscript and SSJS for dynamic content, lookups and CloudPages that feel one-to-one.",
+    icon: "sparkles",
+    accent: "from-fuchsia-500/30 to-pink-600/10",
+  },
+  {
+    title: "AI & Agentforce",
+    description: "Applying Agentforce and AI tooling to speed up build, QA and campaign decisioning.",
+    icon: "bot",
+    accent: "from-emerald-500/30 to-teal-600/10",
+  },
 ];
 
 export type Certification = {
@@ -99,20 +127,22 @@ export const experience: Experience[] = [
     tags: ["SFMC", "Journey Builder", "Automation Studio", "AMPscript", "SQL"],
   },
   {
-    role: "AWS Cloud Intern",
+    role: "Cloud Developer",
     company: "APSSDC",
     period: "Internship",
     points: [
-      "Managed EC2 instances and VPC architecture, optimizing resource allocation and security.",
+      "Provisioned and managed AWS EC2 instances and designed VPC network architecture.",
+      "Optimized resource allocation and hardened security groups and access policies.",
     ],
     tags: ["AWS", "EC2", "VPC"],
   },
   {
-    role: "IoT Intern",
+    role: "IoT Developer",
     company: "Technologics Global",
     period: "Internship",
     points: [
-      "Engineered Arduino-based home automation with sensor integration and energy efficiency in mind.",
+      "Developed Arduino-based home automation systems with multi-sensor integration.",
+      "Designed device logic with a focus on reliability and energy efficiency.",
     ],
     tags: ["Arduino", "C++", "Sensors"],
   },

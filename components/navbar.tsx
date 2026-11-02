@@ -7,6 +7,7 @@ import { profile } from '@/lib/data';
 
 const links = [
   { href: '#about', label: 'About' },
+  { href: '#services', label: 'Services' },
   { href: '#experience', label: 'Experience' },
   { href: '#certifications', label: 'Certifications' },
   { href: '#projects', label: 'Projects' },
@@ -18,6 +19,22 @@ export default function Navbar() {
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState('');
+
+  useEffect(() => {
+    const ids = links.map((l) => l.href.slice(1));
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => e.isIntersecting && setActive(e.target.id));
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -55,8 +72,17 @@ export default function Navbar() {
               <a
                 key={l.href}
                 href={l.href}
-                className="rounded-full px-3 py-1.5 text-sm text-neutral-400 transition-colors hover:bg-white/5 hover:text-white"
+                className={`relative rounded-full px-3 py-1.5 text-sm transition-colors hover:text-white ${
+                  active === l.href.slice(1) ? 'text-white' : 'text-neutral-400'
+                }`}
               >
+                {active === l.href.slice(1) && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 -z-10 rounded-full border border-white/10 bg-white/10"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
                 {l.label}
               </a>
             ))}

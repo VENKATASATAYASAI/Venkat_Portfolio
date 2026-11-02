@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { profile, stats } from '@/lib/data';
 import SectionHeading from './ui/section-heading';
+import CountUp from './ui/count-up';
 
 export default function About() {
   return (
@@ -43,7 +44,7 @@ export default function About() {
               className="shine rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-transparent p-6"
             >
               <div className="bg-gradient-to-br from-white to-neutral-500 bg-clip-text text-4xl font-bold text-transparent">
-                {s.value}
+                {typeof s.value === 'number' ? <CountUp to={s.value} suffix={s.suffix} /> : s.value}
               </div>
               <div className="mt-2 text-sm text-neutral-400">{s.label}</div>
             </motion.div>
